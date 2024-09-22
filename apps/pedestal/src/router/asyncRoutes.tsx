@@ -1,7 +1,7 @@
 import { lazy } from 'react'
+import { HomeOutlined, UserAddOutlined, UsergroupDeleteOutlined } from '@ant-design/icons'
 import type { IRoute } from '.'
 import { Page, PageKey, type PageKeyType } from '@/constants/page'
-import { HomeOutlined, UsergroupDeleteOutlined, UserAddOutlined } from '@ant-design/icons'
 
 type ImportMetaGlob = Record<string, () => Promise<{ default: React.ComponentType }>>
 const modules = import.meta.glob(['../views/**/*.(t|j)sx', '!../views/basics/**']) as ImportMetaGlob
@@ -9,10 +9,11 @@ const modules = import.meta.glob(['../views/**/*.(t|j)sx', '!../views/basics/**'
 /**
  * 子应用icon
  */
+// eslint-disable-next-line react-refresh/only-export-components
 const PageIcon = {
   [PageKey.index]: <HomeOutlined />,
   [PageKey.member]: <UsergroupDeleteOutlined />,
-  [PageKey.audit]: <UserAddOutlined />
+  [PageKey.audit]: <UserAddOutlined />,
 }
 
 const asyncRoutes: Array<IRoute> = Object.entries(modules).map(([key, value]) => {
@@ -62,7 +63,7 @@ function buildTree(routes: IRoute[]): IRoute[] {
       }
 
       if (!existingNode.children) {
-        existingNode.children = [] 
+        existingNode.children = []
       }
 
       currentLevel = existingNode.children

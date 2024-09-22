@@ -20,7 +20,6 @@ export default function AppLayout() {
   const [refreshing, setRefreshing] = useState(false)
   const { setMenuList } = routerStore()
 
-
   const refresh = useCallback(() => {
     setRefreshing(true)
     setTimeout(() => {
@@ -30,7 +29,6 @@ export default function AppLayout() {
 
   useEffect(() => {
     setMenuList()
-
   }, [setMenuList])
 
   const contextValue = useMemo(() => ({ refresh }), [refresh])
@@ -43,13 +41,13 @@ export default function AppLayout() {
               <Layout className="h-full">
                 <Layout>
                   <Header className="h-auto px-0 leading-none" style={{ background: colorBgContainer }}>
-                  <AppHeader
-                    menu={
-                      <AppMenu />
-                    }
-                  />
+                    <AppHeader
+                      menu={
+                        <AppMenu />
+                      }
+                    />
                   </Header>
-                  <Content className="overflow-y-auto p-[4px]">
+                  <Content className="overflow-y-auto ">
                     <AppMain />
                   </Content>
                 </Layout>

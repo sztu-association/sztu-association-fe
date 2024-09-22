@@ -10,14 +10,12 @@ export const PageKey = {
   audit: 'audit',
 }
 
-const PageName =  {
+const PageName = {
   [PageKey.index]: '首页',
   [PageKey.member]: '成员管理',
   [PageKey.audit]: '审核系统',
 
 }
-
-
 
 export const Page = {
   [PageKey.index]: {

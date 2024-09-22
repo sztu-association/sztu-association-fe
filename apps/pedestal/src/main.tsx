@@ -4,10 +4,10 @@ import { Spin } from 'antd'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
+// eslint-disable-next-line import/order
 import microApp from '@micro-zoe/micro-app'
 
 microApp.start()
-
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Suspense

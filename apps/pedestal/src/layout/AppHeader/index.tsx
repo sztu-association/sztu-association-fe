@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import { useFullscreen } from 'ahooks'
-import Logo from '@/assets/react.svg'
 import type { MenuProps } from 'antd'
 import { Avatar, Dropdown } from 'antd'
+import Logo from '@/assets/react.svg'
 import { userStore } from '@/store/user'
 import { AppLayoutContext } from '@/layout'
 import { settingStore } from '@/store/setting'
@@ -13,7 +13,7 @@ const items: MenuProps['items'] = [
     label: '退出登录',
   },
 ]
-export default function AppHeader({ menu}: {menu: JSX.Element}) {
+export default function AppHeader({ menu }: { menu: JSX.Element }) {
   const { userInfo } = userStore()
   const { isDark, toggleDark } = settingStore()
   const { refresh } = useContext(AppLayoutContext)
@@ -70,7 +70,7 @@ export default function AppHeader({ menu}: {menu: JSX.Element}) {
           alt="logo"
         />
         <h2 className="text-[20px] font-bold w-[220px] text-left mx-[10px]">
-          SZTU-社团管理系统          
+          SZTU-社团管理系统
         </h2>
       </div>
       <div className="flex-1 mx-auto">

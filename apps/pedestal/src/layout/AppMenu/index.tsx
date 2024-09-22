@@ -39,7 +39,7 @@ export default function AppMenu() {
 
   return (
     <Menu
-      className='h-[35px] mt-[25px]'
+      className="border-none h-[30px] mt-[15px] "
       theme="light"
       openKeys={openKeys}
       onOpenChange={onOpenChange}

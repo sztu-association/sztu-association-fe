@@ -26,7 +26,7 @@
     "node": ">=20"
   },
   "lint-staged": {
-    "*": "pnpm lint:fix"
+    "{apps}/**/*.{vue,ts,tsx,jsx,js}": "pnpm lint:fix"
   },
   "dependencies": {
     "@micro-zoe/micro-app": "1.0.0-rc.10",

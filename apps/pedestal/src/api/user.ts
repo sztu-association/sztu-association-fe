@@ -9,7 +9,6 @@ export interface ResponseData<T> {
  * @description 登录
  */
 export function login(_params: Record<string, any>) {
-
   return new Promise<ResponseData<{ token: string }>>((resolve) => {
     resolve({
       data: {

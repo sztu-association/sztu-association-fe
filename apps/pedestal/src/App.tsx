@@ -37,10 +37,9 @@ function App() {
     html?.classList.remove(isDark ? 'light' : 'dark')
   }, [isDark])
 
-
   return (
     <ConfigProvider
-      locale={ zhCN }
+      locale={zhCN}
       theme={{
         algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
         cssVar: true,
@@ -48,6 +47,7 @@ function App() {
           fontSize: 14,
         },
       }}
+      prefixCls="sztu-association-pedestal"
     >
       {load && element}
     </ConfigProvider>
