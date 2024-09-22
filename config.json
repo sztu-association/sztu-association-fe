@@ -1,0 +1,17 @@
+{
+    "pedestal": {
+        "name": "基座",
+        "packageName": "sztu-association-pedestal",
+        "port": 8080
+    },
+    "member": {
+        "name": "成员管理",
+        "packageName": "sztu-association-member",
+        "port": 8081
+    },
+    "aduit": {
+        "name": "审核管理",
+        "packageName": "sztu-association-aduit",
+        "port": 8082
+    }
+}

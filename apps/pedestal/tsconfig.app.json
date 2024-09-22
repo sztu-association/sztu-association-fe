@@ -1,0 +1,23 @@
+{
+  "extends": "@sztu-association/typescript-config/base.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      // "const/*": ["src/framework/const/*"],
+      // "router/*": ["src/framework/router/*"],
+      // "store/*": ["src/framework/store/*"],
+      // "interface/*": ["src/framework/interface/*"],
+      // "api/*": ["src/framework/api/*"],
+      // "utils/*": ["src/framework/utils/*"],
+      // "constants/*": ["src/framework/constants/*"],
+      // "module/*": ["src/module/*"],
+      // "hooks/*": ["src/hooks/*"]
+    },
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
