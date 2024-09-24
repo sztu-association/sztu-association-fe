@@ -1,5 +1,8 @@
+import { format } from '@commitlint/format';
+
 export default {
   extends: ["@commitlint/config-conventional"],
+  formatter: format,
   rules: {
     "type-enum": [
       2,
@@ -22,7 +25,7 @@ export default {
     "type-empty": [2, "never"],
     "subject-empty": [2, "never"],
     "subject-full-stop": [2, "never", "."],
-    "header-max-length": [2, "always", 50], 
+    "header-max-length": [2, "always", 50],
   },
   plugins: [{
     rules: {
