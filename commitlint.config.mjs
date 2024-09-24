@@ -2,7 +2,7 @@ import { format } from '@commitlint/format';
 
 export default {
   extends: ["@commitlint/config-conventional"],
-  formatter: format,
+  formatter: format(),
   rules: {
     "type-enum": [
       2,
