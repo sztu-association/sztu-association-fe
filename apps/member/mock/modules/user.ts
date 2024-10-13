@@ -3,7 +3,7 @@ import Mock from 'mockjs';
 
 export default [
   {
-    url: '/mock/user',
+    url: '/api/user',
     method: 'get',
     timeout: 1000,
     response: ({ query }: any) => {

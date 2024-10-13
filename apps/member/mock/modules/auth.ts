@@ -2,7 +2,7 @@ import { MockMethod } from 'vite-plugin-mock';
 
 export default [
   {
-    url: '/mock/api/login',
+    url: '/api/login',
     timeout: 1000,
     method: 'post',
     response: ({ body }) => {

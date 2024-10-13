@@ -1,0 +1,13 @@
+{
+  "name": "@sztu-association/request",
+  "version": "1.0.0",
+  "description": "请求模块",
+  "main": "index.ts",
+  "scripts": {},
+  "author": "",
+  "dependencies": {
+    "@sztu-association/request": "file:",
+    "axios": "^1.7.7",
+    "axios-retry": "^4.5.0"
+  }
+}

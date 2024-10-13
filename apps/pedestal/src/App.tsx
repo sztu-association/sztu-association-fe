@@ -1,22 +1,34 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useRoutes } from 'react-router-dom'
+import { useLocation, useRoutes } from 'react-router-dom'
 import zhCN from 'antd/locale/zh_CN'
-
 import { ConfigProvider, theme } from 'antd'
 import { routerList } from '@/router'
-import { userStore } from '@/store/user'
-
+import { pubsub } from '@/utils/pubsub'
+import { useUser } from '@/hooks'
 // import 'dayjs/locale/zh-cn'
 import { settingStore } from '@/store/setting'
-
+import microApp from '@micro-zoe/micro-app'
+import { useContext } from '@/utils/createContext'
 function App() {
   const { isDark } = settingStore()
   const location = useLocation()
-  const navigate = useNavigate()
+  const { user, gotoLogin, navigate,logout } = useUser()
   const element = useRoutes(routerList)
-  const { token } = userStore()
+  const { token } = user
   const [load, setLoad] = useState(false)
+  pubsub.on('openLogin', () => {
+    logout()
+    gotoLogin()
+  })
 
+  pubsub.on('logout', () => {
+    logout()
+  })
+
+  useEffect(() => {
+    const createContext = useContext(user)
+    microApp.setGlobalData({createContext, pubsub})
+  }, [user])
   useEffect(() => {
     setLoad(false)
     if (token) {
@@ -26,7 +38,7 @@ function App() {
         navigate('/', { replace: true })
     }
     else {
-      navigate('/login', { replace: true })
+      gotoLogin()
     }
     setLoad(true)
   }, [location.pathname, navigate, token])

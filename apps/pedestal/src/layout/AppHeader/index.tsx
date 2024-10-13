@@ -6,6 +6,7 @@ import Logo from '@/assets/react.svg'
 import { userStore } from '@/store/user'
 import { AppLayoutContext } from '@/layout'
 import { settingStore } from '@/store/setting'
+import { Auth } from '@/api/auth'
 
 const items: MenuProps['items'] = [
   {
@@ -21,8 +22,7 @@ export default function AppHeader({ menu }: { menu: JSX.Element }) {
 
   function onDropdownClick({ key }: any) {
     if (key === '1') {
-      window.localStorage.clear()
-      window.location.reload()
+      Auth.logout()
     }
   }
   function changeDark() {
@@ -70,7 +70,7 @@ export default function AppHeader({ menu }: { menu: JSX.Element }) {
           alt="logo"
         />
         <h2 className="text-[20px] font-bold w-[220px] text-left mx-[10px]">
-          SZTU-社团管理系统
+          社团管理系统
         </h2>
       </div>
       <div className="flex-1 mx-auto">

@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { message as antdMessage } from 'antd'
 import { requestConfigEnum, responseCodeEnum } from '@/constants/http'
-import { loginOut } from '@/api/index'
+import { Auth } from '@/api/auth'
 import { userStore } from '@/store/user'
 
 /**
  *  axios 不需要过度封装 https://github.com/axios/axios
  */
 export const http = axios.create({
-  baseURL: import.meta.env.MODE === 'dev' ? '' : import.meta.env.VITE_APP_API,
+  baseURL: import.meta.env.VITE_APP_API,
   timeout: requestConfigEnum.TIME_OUT as number,
 })
 
@@ -16,7 +16,7 @@ http.interceptors.request.use(
   (config) => {
     const token = userStore.getState().token
     if (token && config.headers)
-      config.headers[requestConfigEnum.TOKEN_NAME] = token
+      config.headers[requestConfigEnum.TOKEN_NAME] = `Bearer ${token}`
     return config
   },
   (error) => {
@@ -29,9 +29,7 @@ http.interceptors.response.use(
     // token 失效
     if (config.data.code === responseCodeEnum.LOGIN_CODE) {
       antdMessage.error(config.data.message)
-      setTimeout(() => {
-        loginOut()
-      }, 500)
+      Auth.logout()
       return Promise.reject(config.data)
     }
     // 错误异常

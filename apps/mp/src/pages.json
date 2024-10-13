@@ -56,7 +56,6 @@
       "type": "page",
       "layout": "tabbar",
       "style": {
-        "navigationStyle": "custom",
         "navigationBarTitleText": "社团圈"
       }
     },
@@ -65,7 +64,6 @@
       "type": "page",
       "layout": "tabbar",
       "style": {
-        "navigationStyle": "custom",
         "navigationBarTitleText": "我的"
       }
     }

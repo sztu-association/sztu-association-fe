@@ -1,42 +1,76 @@
-import { useState } from 'react'
-import { Button, Form, Input, message, theme } from 'antd'
+import { useEffect, useState } from 'react'
+import { Button, Form, Image, Input, Space, message, theme } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { userStore } from '@/store/user'
-import { getUserInfo, login } from '@/api/user'
+import { User } from '@/api/user'
 import LoginSvg from '@/assets/login-bg.svg'
+import { Auth } from '@/api/auth'
 
 export default function Login() {
   const { token: { colorBgContainer } } = theme.useToken()
   const { setUserInfo, setToken } = userStore()
   const navigate = useNavigate()
-  const [form] = useState({ username: '', password: '' })
+  const [form, setForm] = useState({ username: '', password: '', verifyCode: '', captchaId: '' })
   const [loading, setLoading] = useState<boolean>(false)
   const [formRef] = Form.useForm()
-
-  async function onFinish(values: typeof form) {
+  const [captcha, setCaptcha] = useState<string>('')
+  const [isLogin, setIsLogin] = useState<boolean>(true)
+  async function onFinish() {
     try {
-      if (values.username !== 'admin' || values.password !== '123456')
-        return message.error('登录失败')
       setLoading(true)
-      const { data: { token } } = await login(values)
-      setToken(token)
-      const { data: { userInfo } } = await getUserInfo()
-      setUserInfo(userInfo)
+      if (!isLogin) {
+        const res = await Auth.register(form)
+        console.log(res, 'register')
+        if (res.code !== 200) {
+          message.error(res.data.message)
+          return
+        }
+      }
+      const res = await Auth.login(form)
+      if (res.code !== 200) {
+        message.error(res.data.message)
+        return
+      }
+      setToken(res.data.token)
+      const resUser = await User.getUserInfo()
+
+      if (resUser.code !== 200) {
+        message.error(resUser.data.message)
+        return
+      }
+      setUserInfo(resUser.data)
       message.success('登录成功')
-      navigate('/', {
+      navigate('/index', {
         replace: true,
       })
     }
-    catch (error) {
+    catch (error: any) {
       console.log(error)
+      message.error(error?.message)
     }
     finally {
       setLoading(false)
     }
   }
+  const getCaptcha = async () => {
+    try {
+      const data = await Auth.getCaptcha()
+      setCaptcha(data.data.img)
+      setForm(prev => ({ ...prev, captchaId: data.data.id }))
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
   const onFinishFailed = (errorInfo: unknown) => {
     console.log('Failed:', errorInfo)
   }
+  const toggleLogin = () => {
+    setIsLogin(!isLogin)
+  }
+  useEffect(() => {
+    getCaptcha()
+  }, [])
   return (
     <div
       className="h-full w-full flex items-center justify-center px-[20px]"
@@ -56,10 +90,13 @@ export default function Login() {
             initialValues={form}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
+            onValuesChange={(changedValues) => {
+              setForm(prev => ({ ...prev, ...changedValues }))
+            }}
           >
             <Form.Item>
               <div className="pb-[20px] text-center text-[22px] text-[#5B86E5] font-bold">
-                React-Admin
+                {isLogin ? '登录' : '注册'}
               </div>
             </Form.Item>
             <Form.Item
@@ -74,8 +111,8 @@ export default function Login() {
                   <div className="icon-[bi--person] px-[5px] text-[20px]">
                   </div>
                 )}
-                maxLength={11}
-                placeholder="admin"
+                maxLength={15}
+                placeholder="请输入用户名"
               />
             </Form.Item>
             <Form.Item
@@ -88,19 +125,54 @@ export default function Login() {
               <Input
                 type="password"
                 prefix={<div className="icon-[bi--bag-dash] px-[5px] text-[20px]"></div>}
-                maxLength={6}
-                placeholder="123456"
+                maxLength={15}
+                placeholder="请输入密码"
               />
             </Form.Item>
-            <Form.Item>
+            <Form.Item
+              label=""
+              name="verifyCode"
+              rules={[
+                { required: true, message: '请输入验证码' },
+              ]}
+            >
+              <Space.Compact style={{ width: '100%' }}>
+                <Input
+                  prefix={<div className="icon-[bi--shield-lock] px-[5px] text-[20px]"></div>}
+                  maxLength={6}
+                  placeholder="验证码"
+                />
+                <Image
+                  onClick={getCaptcha}
+                  width={100}
+                  height={40}
+                  preview={false}
+                  style={{
+                    cursor: 'pointer',
+                    borderTopRightRadius: '4px',
+                    borderBottomRightRadius: '4px',
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                  }}
+                  src={captcha}
+                />
+              </Space.Compact>
+            </Form.Item>
+            <Form.Item className="flex flex-col">
               <Button
                 type="primary"
                 htmlType="submit"
                 block
                 loading={loading}
-                className="w-full"
               >
-                登录
+                {isLogin ? '登录' : '注册'}
+              </Button>
+              {/* 注册 */}
+              <Button
+                type="link"
+                onClick={toggleLogin}
+              >
+                {isLogin ? '去注册' : '去登录'}
               </Button>
             </Form.Item>
           </Form>

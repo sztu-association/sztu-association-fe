@@ -10,7 +10,7 @@ export enum requestContentTypeEnum {
 }
 
 export enum responseCodeEnum {
-  SUCCESS_CODE = 0,
+  SUCCESS_CODE = 200,
   LOGIN_CODE = -1,
   ERROR_CODE = -2,
 }

@@ -1,43 +1,21 @@
-// import { http } from '@/utils/http'
+import type { ResponseData } from './type'
+import { http } from '@/utils/http'
+// eslint-disable-next-line ts/no-namespace
+export namespace User {
+  export interface UserInfo {
+    id: string
+    username: string
+    nickname: string
+    avatar: string
+    roles: string[]
+    permissions: string[]
+  }
 
-export interface ResponseData<T> {
-  code: number
-  data: T
-  msg: string
-}
-/**
- * @description 登录
- */
-export function login(_params: Record<string, any>) {
-  return new Promise<ResponseData<{ token: string }>>((resolve) => {
-    resolve({
-      data: {
-        token: 'token',
-      },
-      code: 200,
-      msg: 'success',
-    })
-  })
+  export function getUserInfo() {
+    return http.get<any, ResponseData<any>>('/account/profile')
+  }
 }
 
 /**
  * @description 获取用户信息
  */
-export function getUserInfo() {
-  //   return http({
-  //     url: '/user/info',
-  //     method: 'get',
-  //   })
-  return new Promise<ResponseData<{ userInfo: { username: string, avatar: string } }>>((resolve) => {
-    resolve({
-      data: {
-        userInfo: {
-          username: 'admin',
-          avatar: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        },
-      },
-      code: 200,
-      msg: 'success',
-    })
-  })
-}

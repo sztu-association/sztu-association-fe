@@ -69,7 +69,10 @@ function buildTree(routes: IRoute[]): IRoute[] {
       currentLevel = existingNode.children
     })
   })
-
+  const routerList = ['index', 'member', 'audit']
+  root.sort((a, b) => {
+    return routerList.indexOf(a.path.split('/')[1]) - routerList.indexOf(b.path.split('/')[1])
+  })
   return root
 }
 export { asyncRoutes, menuList }

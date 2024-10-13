@@ -1,0 +1,9 @@
+{
+  "name": "@sztu-association/lib",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "author": "",
+  "dependencies": {
+    "@sztu-association/lib": "file:"
+  }
+}

@@ -8,7 +8,6 @@ import './index.css'
 import microApp from '@micro-zoe/micro-app'
 
 microApp.start()
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Suspense
     fallback={(

@@ -19,6 +19,10 @@ const userStore = create(persist<State & Action>(set => ({
   userInfo: {
     username: '',
     avatar: '',
+    nickname: '',
+    email: '',
+    phone: '',
+    remark: '',
   },
   setToken: (value) => {
     set(() => ({ token: value }))
